@@ -54,13 +54,7 @@ export default function Header() {
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
-              <Image
-                src="/images/climabat-logo.jpg"
-                alt="Climabat.34"
-                width={180}
-                height={60}
-                className="h-12 sm:h-14 w-auto"
-              />
+              <Image src="/images/logo.png" alt="Climabat.34" width={180} height={60} className="h-12 sm:h-14 w-auto" />
             </Link>
           </div>
 
