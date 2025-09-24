@@ -59,7 +59,7 @@ export default function Header() {
                 alt="Climabat.34"
                 width={200}
                 height={70}
-                className="h-14 sm:h-16 md:h-18 w-auto"
+                className="h-16 sm:h-18 md:h-20 w-auto"
               />
             </Link>
           </div>
