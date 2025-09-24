@@ -12,7 +12,7 @@ export function HeroSection() {
   const heroSlides = [
     {
       id: 1,
-      backgroundImage: "/images/climatisation-moderne-salon.jpg",
+      backgroundImage: "/images/climatisation-professionnelle-bureau.jpg",
       title: "Climatisation",
       subtitle: "Solutions de refroidissement",
       description:
@@ -27,7 +27,7 @@ export function HeroSection() {
     },
     {
       id: 2,
-      backgroundImage: "/images/chauffage-radiateur-moderne.jpg",
+      backgroundImage: "/images/chauffage-pompe-chaleur-maison.jpg",
       title: "Chauffage",
       subtitle: "Chaleur et confort",
       description:
@@ -42,7 +42,7 @@ export function HeroSection() {
     },
     {
       id: 3,
-      backgroundImage: "/images/ventilation-vmc-installation.jpg",
+      backgroundImage: "/images/ventilation-moderne-cuisine.jpg",
       title: "Ventilation",
       subtitle: "Air pur et sain",
       description:
