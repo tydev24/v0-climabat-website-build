@@ -37,12 +37,21 @@ export function ProjectCard({ title, location, date, category, description, imag
   return (
     <Card className="group hover:shadow-lg transition-all duration-300 overflow-hidden">
       <div className="relative aspect-[4/3] overflow-hidden">
-        <Image
-          src={images[0] || "/placeholder.svg"}
-          alt={title}
-          fill
-          className="object-cover group-hover:scale-105 transition-transform duration-300"
-        />
+        {images.length > 0 ? (
+          <Image
+            src={images[0] || "/placeholder.svg"}
+            alt={title}
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-300"
+          />
+        ) : (
+          <div className="w-full h-full bg-muted flex items-center justify-center">
+            <div className="text-center text-muted-foreground">
+              <CategoryIcon className="h-12 w-12 mx-auto mb-2 opacity-50" />
+              <p className="text-sm">Image à venir</p>
+            </div>
+          </div>
+        )}
         <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300" />
         <Badge className="absolute top-3 left-3 bg-primary text-primary-foreground">
           <CategoryIcon className="h-3 w-3 mr-1" />
@@ -86,39 +95,49 @@ export function ProjectCard({ title, location, date, category, description, imag
             </DialogHeader>
 
             <div className="space-y-6">
-              {/* Image gallery */}
               <div className="space-y-4">
-                <div className="relative aspect-[16/10] overflow-hidden rounded-lg">
-                  <Image
-                    src={images[selectedImage] || "/placeholder.svg"}
-                    alt={`${title} - Image ${selectedImage + 1}`}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                {images.length > 1 && (
-                  <div className="flex gap-2 overflow-x-auto pb-2">
-                    {images.map((image, index) => (
-                      <button
-                        key={index}
-                        onClick={() => setSelectedImage(index)}
-                        className={`relative flex-shrink-0 w-20 h-16 rounded-md overflow-hidden border-2 transition-colors ${
-                          selectedImage === index ? "border-primary" : "border-transparent"
-                        }`}
-                      >
-                        <Image
-                          src={image || "/placeholder.svg"}
-                          alt={`Thumbnail ${index + 1}`}
-                          fill
-                          className="object-cover"
-                        />
-                      </button>
-                    ))}
+                {images.length > 0 ? (
+                  <>
+                    <div className="relative aspect-[16/10] overflow-hidden rounded-lg">
+                      <Image
+                        src={images[selectedImage] || "/placeholder.svg"}
+                        alt={`${title} - Image ${selectedImage + 1}`}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    {images.length > 1 && (
+                      <div className="flex gap-2 overflow-x-auto pb-2">
+                        {images.map((image, index) => (
+                          <button
+                            key={index}
+                            onClick={() => setSelectedImage(index)}
+                            className={`relative flex-shrink-0 w-20 h-16 rounded-md overflow-hidden border-2 transition-colors ${
+                              selectedImage === index ? "border-primary" : "border-transparent"
+                            }`}
+                          >
+                            <Image
+                              src={image || "/placeholder.svg"}
+                              alt={`Thumbnail ${index + 1}`}
+                              fill
+                              className="object-cover"
+                            />
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <div className="relative aspect-[16/10] overflow-hidden rounded-lg bg-muted flex items-center justify-center">
+                    <div className="text-center text-muted-foreground">
+                      <CategoryIcon className="h-16 w-16 mx-auto mb-4 opacity-50" />
+                      <p className="text-lg font-medium mb-2">Images à venir</p>
+                      <p className="text-sm">Les photos de ce projet seront ajoutées prochainement</p>
+                    </div>
                   </div>
                 )}
               </div>
 
-              {/* Project details */}
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <h4 className="font-semibold text-lg mb-3">Détails du projet</h4>
