@@ -31,7 +31,7 @@ export default function Header() {
       {/* Top contact bar */}
       <div className="bg-accent text-accent-foreground">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-2 text-sm">
+          <div className="flex justify-between items-center py-1 text-sm">
             <div className="flex items-center gap-4 sm:gap-6">
               <div className="flex items-center gap-2">
                 <Phone className="h-4 w-4" />
@@ -51,7 +51,7 @@ export default function Header() {
 
       {/* Main navigation */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-4">
+        <div className="flex justify-between items-center py-2">
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
               <Image
@@ -59,7 +59,7 @@ export default function Header() {
                 alt="Climabat.34"
                 width={200}
                 height={70}
-                className="h-16 sm:h-18 md:h-20 w-auto"
+                className="h-16 sm:h-16 md:h-18 w-auto"
               />
             </Link>
           </div>
@@ -135,7 +135,7 @@ export default function Header() {
         {/* Mobile navigation */}
         {isMenuOpen && (
           <div className="lg:hidden border-t border-border">
-            <div className="px-2 pt-2 pb-3 space-y-1">
+            <div className="px-2 pt-1 pb-2 space-y-1">
               <Link
                 href="/"
                 className="block px-3 py-2 text-base font-medium text-foreground hover:text-primary hover:bg-muted rounded-md transition-colors"
