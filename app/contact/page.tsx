@@ -40,7 +40,7 @@ export default function ContactPage() {
         className="relative py-16 sm:py-20 bg-cover bg-center bg-no-repeat"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/modern-office-building-with-hvac-equipment.jpg')",
+            "linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/professional-hvac-technician-contact.jpg')",
         }}
       >
         <div className="container mx-auto px-4 text-center text-white">

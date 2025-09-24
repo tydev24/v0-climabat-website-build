@@ -124,4 +124,45 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* Amélioration de la responsivité pour tous les appareils */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Amélioration des images responsives */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Optimisation pour les petits écrans */
+  @media (max-width: 640px) {
+    .container {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+  }
+
+  /* Optimisation pour les très petits écrans */
+  @media (max-width: 375px) {
+    .text-4xl {
+      font-size: 2rem;
+      line-height: 2.5rem;
+    }
+
+    .text-3xl {
+      font-size: 1.75rem;
+      line-height: 2.25rem;
+    }
+  }
+
+  /* Optimisation pour les tablettes */
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .container {
+      max-width: 100%;
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
 }
