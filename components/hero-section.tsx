@@ -161,7 +161,7 @@ export function HeroSection() {
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/85 to-background/80"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-background/60 via-background/50 to-background/40"></div>
 
           <button
             onClick={prevSlide}
