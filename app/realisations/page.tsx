@@ -17,12 +17,15 @@ export default function RealisationsPage() {
       category: "chauffage",
       description:
         "Installation complète d'une pompe à chaleur air/eau haute performance dans une maison individuelle de 150m². Remplacement de l'ancienne chaudière fioul avec optimisation du circuit de chauffage existant.",
-      images: ["/images/pac-exterieure.jpg", "/images/pac-interieure.jpg", "/images/tableau-commande.jpg"],
+      images: [
+        "/images/pac-installation-montpellier.jpg",
+        "/images/pac-technique-moderne.jpg",
+        "/images/pompe-chaleur-exterieure.jpg",
+      ],
       details: {
         surface: "150m²",
         equipment: "Pompe à chaleur Daikin Altherma 11kW, ballon ECS 300L",
         duration: "2 jours",
-        budget: "12 000€ - 15 000€",
       },
     },
     {
@@ -34,16 +37,14 @@ export default function RealisationsPage() {
       description:
         "Installation d'un système de climatisation multi-split réversible pour une maison de 120m². 4 unités intérieures murales avec une unité extérieure silencieuse.",
       images: [
-        "/images/multi-split-exterieur.jpg",
-        "/images/unite-murale-salon.jpg",
-        "/images/unite-murale-chambre.jpg",
-        "/images/telecommande-clim.jpg",
+        "/images/multi-split-installation-beziers.jpg",
+        "/images/unite-murale-salon-moderne.jpg",
+        "/images/climatisation-multi-zones.jpg",
       ],
       details: {
         surface: "120m²",
         equipment: "Mitsubishi Electric MSZ-LN 4x2.5kW + MXZ-4F72VF",
         duration: "1 jour",
-        budget: "4 500€ - 6 000€",
       },
     },
     {
@@ -54,12 +55,15 @@ export default function RealisationsPage() {
       category: "ventilation",
       description:
         "Installation d'une VMC double flux dans une maison BBC neuve. Système avec récupération de chaleur 90% et filtration haute performance pour un air sain.",
-      images: ["/images/caisson-vmc.jpg", "/images/reseau-gaines.jpg", "/images/bouches-extraction.jpg"],
+      images: [
+        "/images/vmc-double-flux-sete.jpg",
+        "/images/caisson-ventilation-moderne.jpg",
+        "/images/reseau-gaines-vmc.jpg",
+      ],
       details: {
         surface: "140m²",
         equipment: "Atlantic Duocosy HR 300m³/h avec échangeur thermique",
         duration: "1 jour",
-        budget: "3 000€ - 4 000€",
       },
     },
     {
@@ -70,12 +74,15 @@ export default function RealisationsPage() {
       category: "chauffage",
       description:
         "Rénovation complète du système de chauffage central avec remplacement de la chaudière gaz et mise aux normes de l'installation. Optimisation énergétique.",
-      images: ["/images/chaudiere-gaz.jpg", "/images/radiateurs-performance.jpg", "/images/thermostat-connecte.jpg"],
+      images: [
+        "/images/renovation-chauffage-nimes.jpg",
+        "/images/chaudiere-gaz-moderne.jpg",
+        "/images/radiateurs-haute-performance.jpg",
+      ],
       details: {
         surface: "180m²",
         equipment: "Chaudière Saunier Duval 25kW + 8 radiateurs aluminium",
         duration: "3 jours",
-        budget: "8 000€ - 10 000€",
       },
     },
     {
@@ -86,12 +93,15 @@ export default function RealisationsPage() {
       category: "climatisation",
       description:
         "Installation d'une climatisation gainable dans les combles pour une solution invisible et silencieuse. Diffusion d'air par grilles encastrées au plafond.",
-      images: ["/images/unite-gainable.jpg", "/images/grilles-diffusion.jpg", "/images/gaines-isolees.jpg"],
+      images: [
+        "/images/climatisation-gainable-lunel.jpg",
+        "/images/unite-gainable-combles.jpg",
+        "/images/grilles-diffusion-air.jpg",
+      ],
       details: {
         surface: "100m²",
         equipment: "Daikin FDXM50F gainable + réseau de gaines isolées",
         duration: "2 jours",
-        budget: "5 500€ - 7 000€",
       },
     },
     {
@@ -102,12 +112,15 @@ export default function RealisationsPage() {
       category: "chauffage",
       description:
         "Installation d'un plancher chauffant électrique dans une extension de maison. Solution confortable et économique avec régulation pièce par pièce.",
-      images: ["/images/cables-chauffants.jpg", "/images/isolation-thermique.jpg", "/images/thermostat-digital.jpg"],
+      images: [
+        "/images/plancher-chauffant-agde.jpg",
+        "/images/cables-chauffants-installation.jpg",
+        "/images/thermostat-plancher-chauffant.jpg",
+      ],
       details: {
         surface: "40m²",
         equipment: "Câbles chauffants Thermor + thermostats programmables",
         duration: "1 jour",
-        budget: "2 000€ - 3 000€",
       },
     },
   ]

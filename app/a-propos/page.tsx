@@ -136,19 +136,7 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div className="text-center">
-              <Badge variant="outline" className="text-lg p-3 mb-2">
-                RGE
-              </Badge>
-              <p className="text-sm text-muted-foreground">Reconnu Garant Environnement</p>
-            </div>
-            <div className="text-center">
-              <Badge variant="outline" className="text-lg p-3 mb-2">
-                QualiPAC
-              </Badge>
-              <p className="text-sm text-muted-foreground">Pompes à chaleur</p>
-            </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
             <div className="text-center">
               <Badge variant="outline" className="text-lg p-3 mb-2">
                 Qualibat
@@ -160,6 +148,12 @@ export default function AboutPage() {
                 Garantie
               </Badge>
               <p className="text-sm text-muted-foreground">2 ans pièces & main d'œuvre</p>
+            </div>
+            <div className="text-center">
+              <Badge variant="outline" className="text-lg p-3 mb-2">
+                Assurance
+              </Badge>
+              <p className="text-sm text-muted-foreground">Décennale & RC Pro</p>
             </div>
           </div>
         </div>

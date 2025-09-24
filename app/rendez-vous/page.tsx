@@ -32,7 +32,15 @@ export default function RendezVousPage() {
   return (
     <main>
       {/* Hero section */}
-      <section className="bg-gradient-to-br from-primary/10 via-background to-accent/5 py-16">
+      <section
+        className="relative bg-gradient-to-br from-primary/10 via-background to-accent/5 py-16"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('/hvac-technician-appointment-consultation.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h1 className="text-4xl lg:text-5xl font-bold text-balance mb-6">
@@ -70,7 +78,15 @@ export default function RendezVousPage() {
       </section>
 
       {/* Process */}
-      <section className="bg-muted/30 py-16">
+      <section
+        className="relative bg-muted/30 py-16"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(248, 250, 252, 0.95), rgba(248, 250, 252, 0.95)), url('/hvac-installation-process-steps.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Comment ça marche ?</h2>

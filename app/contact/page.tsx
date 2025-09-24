@@ -202,7 +202,15 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="py-12 sm:py-16 bg-primary text-primary-foreground">
+      <section
+        className="relative py-12 sm:py-16 bg-primary text-primary-foreground"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(59, 130, 246, 0.9), rgba(59, 130, 246, 0.9)), url('/hvac-emergency-service-24h.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-2xl sm:text-3xl font-bold mb-4">Service d'urgence 24h/24</h2>
           <p className="text-lg sm:text-xl mb-6 opacity-90">

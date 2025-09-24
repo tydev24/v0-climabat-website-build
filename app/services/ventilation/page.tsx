@@ -1,7 +1,5 @@
-import Header from "@/components/header"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { Wrench, Wind, Leaf, Shield, Home, CheckCircle, ArrowLeft, Zap } from "lucide-react"
 import Link from "next/link"
 
@@ -12,28 +10,24 @@ export default function VentilationPage() {
       title: "VMC Simple flux",
       description: "Ventilation mécanique contrôlée économique",
       features: ["Installation simple", "Économique", "Fiable"],
-      price: "À partir de 800€",
     },
     {
       icon: Zap,
       title: "VMC Double flux",
       description: "Récupération de chaleur et économies d'énergie",
       features: ["Récupération 90%", "Filtration air", "Très économique"],
-      price: "À partir de 2 500€",
     },
     {
       icon: Home,
       title: "Ventilation naturelle",
       description: "Solutions passives pour une ventilation douce",
       features: ["Sans électricité", "Silencieuse", "Écologique"],
-      price: "À partir de 300€",
     },
     {
       icon: Shield,
       title: "Purificateurs d'air",
       description: "Amélioration de la qualité de l'air intérieur",
       features: ["Filtres HEPA", "Anti-allergènes", "Contrôle qualité"],
-      price: "À partir de 500€",
     },
   ]
 
@@ -48,8 +42,6 @@ export default function VentilationPage() {
 
   return (
     <main>
-      <Header />
-
       {/* Breadcrumb */}
       <div className="bg-muted/30 py-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -156,9 +148,6 @@ export default function VentilationPage() {
                       </div>
                     ))}
                   </div>
-                  <Badge variant="secondary" className="text-sm">
-                    {type.price}
-                  </Badge>
                 </CardContent>
               </Card>
             ))}

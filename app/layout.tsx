@@ -7,6 +7,7 @@ import { Suspense } from "react"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
 import ScrollToTop from "@/components/scroll-to-top"
+import WhatsAppFloat from "@/components/whatsapp-float"
 import "./globals.css"
 
 export const metadata: Metadata = {
@@ -30,6 +31,7 @@ export default function RootLayout({
           <Suspense fallback={null}>{children}</Suspense>
         </main>
         <Footer />
+        <WhatsAppFloat />
         <Analytics />
       </body>
     </html>

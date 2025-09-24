@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { Thermometer, Flame, Zap, Leaf, Wrench, CheckCircle, ArrowLeft } from "lucide-react"
 import Link from "next/link"
 
@@ -11,28 +10,24 @@ export default function ChauffagePage() {
       title: "Chaudières gaz",
       description: "Chaudières à condensation haute performance",
       features: ["Rendement jusqu'à 110%", "Économies d'énergie", "Fiabilité prouvée"],
-      price: "À partir de 3 500€",
     },
     {
       icon: Zap,
       title: "Pompes à chaleur",
       description: "Solutions écologiques et économiques",
       features: ["COP jusqu'à 5", "Éligible aux aides", "Chauffage + ECS"],
-      price: "À partir de 8 000€",
     },
     {
       icon: Thermometer,
       title: "Radiateurs",
       description: "Radiateurs haute performance et design",
       features: ["Chaleur douce", "Régulation précise", "Design moderne"],
-      price: "À partir de 150€/unité",
     },
     {
       icon: Leaf,
       title: "Plancher chauffant",
       description: "Confort optimal et économies d'énergie",
       features: ["Chaleur uniforme", "Invisible", "Compatible RT2012"],
-      price: "À partir de 50€/m²",
     },
   ]
 
@@ -118,7 +113,7 @@ export default function ChauffagePage() {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Nos solutions de chauffage</h2>
             <p className="text-xl text-muted-foreground text-pretty">
-              Choisissez la solution qui correspond à vos besoins et votre budget
+              Choisissez la solution qui correspond à vos besoins
             </p>
           </div>
 
@@ -143,9 +138,6 @@ export default function ChauffagePage() {
                       </div>
                     ))}
                   </div>
-                  <Badge variant="secondary" className="text-sm">
-                    {type.price}
-                  </Badge>
                 </CardContent>
               </Card>
             ))}

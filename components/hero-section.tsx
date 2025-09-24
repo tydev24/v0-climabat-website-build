@@ -1,9 +1,29 @@
+"use client"
+
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Thermometer, Wind, Wrench, Shield, Clock, MapPin } from "lucide-react"
 import Link from "next/link"
 
 export function HeroSection() {
+  const backgroundImages = [
+    "/modern-home-interior-with-heating-and-cooling-syst.jpg",
+    "/professional-hvac-installation-modern-home.jpg",
+    "/modern-hvac-equipment-installation.jpg",
+    "/hvac-company-team-working-on-installation.jpg",
+  ]
+
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % backgroundImages.length)
+    }, 5000) // Change image every 5 seconds
+
+    return () => clearInterval(interval)
+  }, [backgroundImages.length])
+
   const services = [
     {
       icon: Thermometer,
@@ -42,11 +62,11 @@ export function HeroSection() {
 
   return (
     <section className="relative">
-      {/* Hero background */}
+      {/* Hero background with dynamic images */}
       <div
-        className="relative bg-gradient-to-br from-accent/10 via-background to-primary/5 py-20 lg:py-32"
+        className="relative bg-gradient-to-br from-accent/10 via-background to-primary/5 py-20 lg:py-32 transition-all duration-1000 ease-in-out"
         style={{
-          backgroundImage: `url('/modern-home-interior-with-heating-and-cooling-syst.jpg')`,
+          backgroundImage: `url('${backgroundImages[currentImageIndex]}')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundBlendMode: "overlay",

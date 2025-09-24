@@ -68,14 +68,23 @@ export default function ServicesPage() {
   return (
     <main>
       {/* Hero section */}
-      <section className="bg-gradient-to-br from-accent/10 via-background to-primary/5 py-12 sm:py-16">
+      <section
+        className="relative bg-gradient-to-br from-accent/10 via-background to-primary/5 py-12 sm:py-16"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/professional-hvac-installation-modern-home.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundAttachment: "fixed",
+        }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-balance mb-6">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-balance mb-6 text-white">
               Nos services de
               <span className="text-primary"> confort thermique</span>
             </h1>
-            <p className="text-lg sm:text-xl text-muted-foreground text-pretty mb-8 leading-relaxed">
+            <p className="text-lg sm:text-xl text-white/90 text-pretty mb-8 leading-relaxed">
               Découvrez notre gamme complète de services pour votre chauffage, climatisation et ventilation dans
               l'Hérault. Solutions professionnelles avec garantie et intervention rapide.
             </p>
@@ -83,7 +92,12 @@ export default function ServicesPage() {
               <Button size="lg" asChild>
                 <Link href="/rendez-vous">Prendre rendez-vous</Link>
               </Button>
-              <Button size="lg" variant="outline" asChild>
+              <Button
+                size="lg"
+                variant="outline"
+                asChild
+                className="bg-white/10 border-white/30 text-white hover:bg-white hover:text-foreground"
+              >
                 <Link href="/contact">Devis gratuit</Link>
               </Button>
             </div>
@@ -110,7 +124,15 @@ export default function ServicesPage() {
       </section>
 
       {/* Additional services */}
-      <section className="bg-muted/30 py-12 sm:py-16">
+      <section
+        className="relative bg-muted/30 py-12 sm:py-16"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('/modern-hvac-equipment-installation.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-2xl sm:text-3xl font-bold mb-4">Services complémentaires</h2>

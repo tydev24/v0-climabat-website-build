@@ -1,9 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { Wind, Snowflake, Sun, Home, Building, Wrench, CheckCircle, ArrowLeft } from "lucide-react"
 import Link from "next/link"
-import Header from "@/components/header"
 
 export default function ClimatisationPage() {
   const climatisationTypes = [
@@ -12,28 +10,24 @@ export default function ClimatisationPage() {
       title: "Climatisation réversible",
       description: "Chauffage et climatisation en un seul système",
       features: ["Chaud et froid", "Économique", "Installation simple"],
-      price: "À partir de 1 800€",
     },
     {
       icon: Home,
       title: "Multi-split",
       description: "Plusieurs unités intérieures, une unité extérieure",
       features: ["Jusqu'à 5 unités", "Réglage indépendant", "Design discret"],
-      price: "À partir de 3 500€",
     },
     {
       icon: Building,
       title: "Climatisation gainable",
       description: "Solution invisible intégrée aux combles",
       features: ["Invisible", "Silencieuse", "Répartition uniforme"],
-      price: "À partir de 4 500€",
     },
     {
       icon: Snowflake,
       title: "Pompe à chaleur air/air",
       description: "Solution écologique haute performance",
       features: ["COP élevé", "Éligible aux aides", "Très économique"],
-      price: "À partir de 2 800€",
     },
   ]
 
@@ -48,8 +42,6 @@ export default function ClimatisationPage() {
 
   return (
     <main>
-      <Header />
-
       {/* Breadcrumb */}
       <div className="bg-muted/30 py-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -156,9 +148,6 @@ export default function ClimatisationPage() {
                       </div>
                     ))}
                   </div>
-                  <Badge variant="secondary" className="text-sm">
-                    {type.price}
-                  </Badge>
                 </CardContent>
               </Card>
             ))}
