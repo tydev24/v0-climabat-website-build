@@ -96,23 +96,6 @@ export default function MentionsLegalesPage() {
 
           <Card>
             <CardHeader>
-              <CardTitle>Hébergement du site</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p>
-                Ce site est hébergé par Vercel Inc.
-                <br />
-                340 S Lemon Ave #4133
-                <br />
-                Walnut, CA 91789
-                <br />
-                États-Unis
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
               <CardTitle>Propriété intellectuelle</CardTitle>
             </CardHeader>
             <CardContent>
