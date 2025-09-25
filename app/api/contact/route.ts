@@ -21,13 +21,13 @@ export async function POST(request: NextRequest) {
     }
 
     console.log("[v0] Creating SMTP transporter for contact form")
-    const transporter = nodemailer.createTransporter({
+    const transporter = nodemailer.createTransport({
       host: "mail.climabat34.fr",
       port: 465,
       secure: true, // SSL
       auth: {
         user: "support@climabat34.fr",
-        pass: "Climabat34@",
+        pass: "vM8$GKHN2Xy2Sjd",
       },
     })
 
