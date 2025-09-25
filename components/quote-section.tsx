@@ -90,8 +90,8 @@ export function QuoteSection() {
                   <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
                     <Phone className="h-4 w-4" />
                     <span>Ou appelez-nous au</span>
-                    <a href="tel:0467123456" className="font-semibold text-primary hover:underline">
-                      04 67 12 34 56
+                    <a href="tel:0748295492" className="font-semibold text-primary hover:underline">
+                      07 48 29 54 92
                     </a>
                   </div>
                 </div>

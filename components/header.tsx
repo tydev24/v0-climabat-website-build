@@ -36,6 +36,7 @@ export default function Header() {
             <div className="flex items-center gap-4 sm:gap-6">
               <div className="flex items-center gap-2">
                 <Phone className="h-4 w-4" />
+                {/* Corrected phone number back to 07 48 29 54 92 */}
                 <span className="hidden sm:inline">07 48 29 54 92</span>
                 <span className="sm:hidden">07 48 29 54 92</span>
               </div>
