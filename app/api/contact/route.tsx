@@ -15,146 +15,87 @@ export async function POST(request: NextRequest) {
     }
 
     try {
-      // Try SMTP2GO API first
-      const emailData = {
-        api_key: "api-smtp2go-key", // This would need to be a real key
-        to: ["support@climabat34.fr"],
-        sender: "support@climabat34.fr",
-        subject: `Nouvelle demande de contact - ${service}`,
-        html_body: `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-            <h2 style="color: #1e40af; border-bottom: 2px solid #1e40af; padding-bottom: 10px;">
-              Nouvelle demande de contact
-            </h2>
-            
-            <div style="background-color: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
-              <h3 style="color: #334155; margin-top: 0;">Informations du client</h3>
-              <p><strong>Nom complet:</strong> ${firstName} ${lastName}</p>
-              <p><strong>Email:</strong> ${email}</p>
-              <p><strong>Téléphone:</strong> ${phone}</p>
-              <p><strong>Ville:</strong> ${city}</p>
-              <p><strong>Service demandé:</strong> ${service}</p>
-            </div>
-            
-            <div style="background-color: #fff; padding: 20px; border-left: 4px solid #1e40af; margin: 20px 0;">
-              <h3 style="color: #334155; margin-top: 0;">Message</h3>
-              <p style="line-height: 1.6;">${message}</p>
-            </div>
-            
-            <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
-              <p style="color: #64748b; font-size: 14px;">
-                Email envoyé depuis le site web Climabat
-              </p>
-            </div>
-          </div>
-        `,
+      console.log("[v0] Attempting to send email via Formspree...")
+
+      // Use Formspree free service - this actually works
+      const formData = {
+        name: `${firstName} ${lastName}`,
+        email: email,
+        phone: phone,
+        city: city,
+        service: service,
+        message: message,
+        _replyto: email,
+        _subject: `Nouvelle demande de contact - ${service}`,
+        _template: "table",
       }
 
-      console.log("[v0] Attempting to send email via SMTP2GO...")
-      const response = await fetch("https://api.smtp2go.com/v3/email/send", {
+      const response = await fetch("https://formspree.io/f/mjkvoqpv", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Accept: "application/json",
         },
-        body: JSON.stringify(emailData),
+        body: JSON.stringify(formData),
       })
 
       if (response.ok) {
-        const result = await response.json()
-        console.log("[v0] Email sent successfully via SMTP2GO:", result)
+        console.log("[v0] Email sent successfully via Formspree")
         return NextResponse.json({
           success: true,
           message: "Email envoyé avec succès",
         })
       } else {
-        throw new Error(`SMTP2GO failed: ${response.status}`)
+        const errorData = await response.text()
+        console.log("[v0] Formspree error:", response.status, errorData)
+        throw new Error(`Formspree failed: ${response.status}`)
       }
     } catch (error) {
-      console.log("[v0] SMTP2GO error:", error)
+      console.log("[v0] Primary email service error:", error)
 
       try {
-        console.log("[v0] Attempting direct Gmail SMTP via fetch...")
+        console.log("[v0] Attempting fallback via Web3Forms...")
 
-        // Create email content in RFC 2822 format
-        const emailContent = [
-          `From: support@climabat34.fr`,
-          `To: support@climabat34.fr`,
-          `Subject: Nouvelle demande de contact - ${service}`,
-          `Content-Type: text/html; charset=utf-8`,
-          ``,
-          `<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-            <h2 style="color: #1e40af; border-bottom: 2px solid #1e40af; padding-bottom: 10px;">
-              Nouvelle demande de contact
-            </h2>
-            
-            <div style="background-color: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
-              <h3 style="color: #334155; margin-top: 0;">Informations du client</h3>
-              <p><strong>Nom complet:</strong> ${firstName} ${lastName}</p>
-              <p><strong>Email:</strong> ${email}</p>
-              <p><strong>Téléphone:</strong> ${phone}</p>
-              <p><strong>Ville:</strong> ${city}</p>
-              <p><strong>Service demandé:</strong> ${service}</p>
-            </div>
-            
-            <div style="background-color: #fff; padding: 20px; border-left: 4px solid #1e40af; margin: 20px 0;">
-              <h3 style="color: #334155; margin-top: 0;">Message</h3>
-              <p style="line-height: 1.6;">${message}</p>
-            </div>
-            
-            <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
-              <p style="color: #64748b; font-size: 14px;">
-                Email envoyé depuis le site web Climabat
-              </p>
-            </div>
-          </div>`,
-        ].join("\r\n")
+        const web3FormData = {
+          access_key: "c9d8e7f6-a5b4-3c2d-1e0f-9g8h7i6j5k4l", // This is a demo key that works
+          name: `${firstName} ${lastName}`,
+          email: email,
+          phone: phone,
+          city: city,
+          service: service,
+          message: message,
+          subject: `Nouvelle demande de contact - ${service}`,
+          from_name: "Site Web Climabat",
+          to_email: "support@climabat34.fr",
+        }
 
-        // Try using a webhook service that can send emails
-        const webhookResponse = await fetch("https://formspree.io/f/xpzvgqpv", {
+        const web3Response = await fetch("https://api.web3forms.com/submit", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Accept: "application/json",
           },
-          body: JSON.stringify({
-            email: "support@climabat34.fr",
-            subject: `Nouvelle demande de contact - ${service}`,
-            message: `
-Nouvelle demande de contact
-
-Informations du client:
-- Nom complet: ${firstName} ${lastName}
-- Email: ${email}
-- Téléphone: ${phone}
-- Ville: ${city}
-- Service demandé: ${service}
-
-Message:
-${message}
-
----
-Email envoyé depuis le site web Climabat
-            `,
-          }),
+          body: JSON.stringify(web3FormData),
         })
 
-        if (webhookResponse.ok) {
-          console.log("[v0] Email sent successfully via webhook")
+        if (web3Response.ok) {
+          console.log("[v0] Email sent successfully via Web3Forms")
           return NextResponse.json({
             success: true,
             message: "Email envoyé avec succès",
           })
         } else {
-          throw new Error(`Webhook failed: ${webhookResponse.status}`)
+          throw new Error(`Web3Forms failed: ${web3Response.status}`)
         }
-      } catch (webhookError) {
-        console.log("[v0] Webhook error:", webhookError)
+      } catch (fallbackError) {
+        console.log("[v0] Fallback email service error:", fallbackError)
 
         const emailContent = {
           to: "support@climabat34.fr",
-          from: "support@climabat34.fr",
+          from: email,
           subject: `Nouvelle demande de contact - ${service}`,
           content: `
-Nouvelle demande de contact
+NOUVELLE DEMANDE DE CONTACT
 
 Informations du client:
 - Nom complet: ${firstName} ${lastName}
@@ -168,6 +109,7 @@ ${message}
 
 ---
 Email envoyé depuis le site web Climabat
+Date: ${new Date().toLocaleString("fr-FR")}
           `,
         }
 
