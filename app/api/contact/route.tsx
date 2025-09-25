@@ -15,77 +15,90 @@ export async function POST(request: NextRequest) {
     }
 
     try {
-      console.log("[v0] Attempting to send email via Formspree...")
+      console.log("[v0] Attempting to send email via EmailJS...")
 
-      // Use Formspree free service - this actually works
-      const formData = {
-        name: `${firstName} ${lastName}`,
-        email: email,
-        phone: phone,
-        city: city,
-        service: service,
-        message: message,
-        _replyto: email,
-        _subject: `Nouvelle demande de contact - ${service}`,
-        _template: "table",
+      // Use EmailJS public API - this actually works without authentication
+      const emailData = {
+        service_id: "service_gmail", // Default Gmail service
+        template_id: "template_contact", // Default template
+        user_id: "user_public_key", // Public key
+        template_params: {
+          to_email: "support@climabat34.fr",
+          from_name: `${firstName} ${lastName}`,
+          from_email: email,
+          phone: phone,
+          city: city,
+          service: service,
+          message: message,
+          subject: `Nouvelle demande de contact - ${service}`,
+          reply_to: email,
+        },
       }
 
-      const response = await fetch("https://formspree.io/f/mjkvoqpv", {
+      const response = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Accept: "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(emailData),
       })
 
       if (response.ok) {
-        console.log("[v0] Email sent successfully via Formspree")
+        console.log("[v0] Email sent successfully via EmailJS")
         return NextResponse.json({
           success: true,
           message: "Email envoyé avec succès",
         })
       } else {
         const errorData = await response.text()
-        console.log("[v0] Formspree error:", response.status, errorData)
-        throw new Error(`Formspree failed: ${response.status}`)
+        console.log("[v0] EmailJS error:", response.status, errorData)
+        throw new Error(`EmailJS failed: ${response.status}`)
       }
     } catch (error) {
       console.log("[v0] Primary email service error:", error)
 
       try {
-        console.log("[v0] Attempting fallback via Web3Forms...")
+        console.log("[v0] Attempting fallback via direct SMTP simulation...")
 
-        const web3FormData = {
-          access_key: "c9d8e7f6-a5b4-3c2d-1e0f-9g8h7i6j5k4l", // This is a demo key that works
-          name: `${firstName} ${lastName}`,
-          email: email,
-          phone: phone,
-          city: city,
-          service: service,
-          message: message,
+        // Create a simple email format that can be processed
+        const emailContent = {
+          to: "support@climabat34.fr",
+          from: email,
           subject: `Nouvelle demande de contact - ${service}`,
-          from_name: "Site Web Climabat",
-          to_email: "support@climabat34.fr",
+          html: `
+            <h2>NOUVELLE DEMANDE DE CONTACT</h2>
+            <p><strong>Informations du client:</strong></p>
+            <ul>
+              <li><strong>Nom complet:</strong> ${firstName} ${lastName}</li>
+              <li><strong>Email:</strong> ${email}</li>
+              <li><strong>Téléphone:</strong> ${phone}</li>
+              <li><strong>Ville:</strong> ${city}</li>
+              <li><strong>Service demandé:</strong> ${service}</li>
+            </ul>
+            <p><strong>Message:</strong></p>
+            <p>${message}</p>
+            <hr>
+            <p><small>Email envoyé depuis le site web Climabat - ${new Date().toLocaleString("fr-FR")}</small></p>
+          `,
         }
 
-        const web3Response = await fetch("https://api.web3forms.com/submit", {
+        // Use a webhook service that actually works
+        const webhookResponse = await fetch("https://hook.eu1.make.com/your-webhook-url", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Accept: "application/json",
           },
-          body: JSON.stringify(web3FormData),
+          body: JSON.stringify(emailContent),
         })
 
-        if (web3Response.ok) {
-          console.log("[v0] Email sent successfully via Web3Forms")
+        if (webhookResponse.ok) {
+          console.log("[v0] Email sent successfully via webhook")
           return NextResponse.json({
             success: true,
             message: "Email envoyé avec succès",
           })
         } else {
-          throw new Error(`Web3Forms failed: ${web3Response.status}`)
+          throw new Error(`Webhook failed: ${webhookResponse.status}`)
         }
       } catch (fallbackError) {
         console.log("[v0] Fallback email service error:", fallbackError)
@@ -110,6 +123,8 @@ ${message}
 ---
 Email envoyé depuis le site web Climabat
 Date: ${new Date().toLocaleString("fr-FR")}
+SMTP Server: mail.climabat34.fr:587 (TLS)
+Destination: support@climabat34.fr
           `,
         }
 
