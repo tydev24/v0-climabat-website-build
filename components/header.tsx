@@ -56,9 +56,9 @@ export default function Header() {
               <Image
                 src="/images/logo.png"
                 alt="Climabat.34"
-                width={240}
-                height={85}
-                className="h-18 sm:h-20 md:h-22 lg:h-24 w-auto"
+                width={260}
+                height={95}
+                className="h-20 sm:h-22 md:h-24 lg:h-26 w-auto"
               />
             </Link>
           </div>
