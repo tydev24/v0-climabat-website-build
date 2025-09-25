@@ -1,4 +1,15 @@
 import { type NextRequest, NextResponse } from "next/server"
+import nodemailer from "nodemailer"
+
+const transporter = nodemailer.createTransporter({
+  host: "mail.climabat34.fr",
+  port: 465,
+  secure: true, // SSL
+  auth: {
+    user: "support@climabat34.fr",
+    pass: "Climabat34@",
+  },
+})
 
 export async function POST(request: NextRequest) {
   try {
@@ -18,7 +29,11 @@ export async function POST(request: NextRequest) {
       description,
     } = body
 
-    const emailContent = `
+    const mailOptions = {
+      from: "support@climabat34.fr",
+      to: "contact@climabat34.fr",
+      subject: "Nouvelle demande de rendez-vous",
+      text: `
 Nouvelle demande de rendez-vous depuis le site web
 
 Informations client :
@@ -42,13 +57,10 @@ ${description || "Aucune description fournie"}
 
 ---
 Email envoyé automatiquement depuis le formulaire de rendez-vous du site Climabat.34
-    `.trim()
+      `.trim(),
+    }
 
-    console.log("Email à envoyer à mail_php@climabat34.fr:")
-    console.log("Sujet: Nouvelle demande de rendez-vous")
-    console.log("Contenu:", emailContent)
-
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    await transporter.sendMail(mailOptions)
 
     return NextResponse.json({
       success: true,
