@@ -48,31 +48,50 @@ export function AppointmentForm() {
     e.preventDefault()
     setIsSubmitting(true)
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+    try {
+      const response = await fetch("/api/appointment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
 
-    toast({
-      title: "Rendez-vous demandé !",
-      description: "Nous vous contacterons dans les plus brefs délais pour confirmer votre rendez-vous.",
-    })
+      const result = await response.json()
+
+      if (result.success) {
+        toast({
+          title: "Rendez-vous demandé !",
+          description: "Nous vous contacterons dans les plus brefs délais pour confirmer votre rendez-vous.",
+        })
+
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          phone: "",
+          address: "",
+          city: "",
+          postalCode: "",
+          serviceType: "",
+          urgency: "",
+          preferredDate: "",
+          preferredTime: "",
+          description: "",
+          acceptTerms: false,
+        })
+      } else {
+        throw new Error(result.message)
+      }
+    } catch (error) {
+      toast({
+        title: "Erreur",
+        description: "Une erreur est survenue lors de l'envoi de votre demande.",
+        variant: "destructive",
+      })
+    }
 
     setIsSubmitting(false)
-    // Reset form
-    setFormData({
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
-      address: "",
-      city: "",
-      postalCode: "",
-      serviceType: "",
-      urgency: "",
-      preferredDate: "",
-      preferredTime: "",
-      description: "",
-      acceptTerms: false,
-    })
   }
 
   const updateFormData = (field: string, value: string | boolean) => {

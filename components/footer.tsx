@@ -14,7 +14,7 @@ export default function Footer() {
             </div>
             <p className="text-slate-300 text-sm leading-relaxed">
               Votre spécialiste en chauffage, climatisation et ventilation dans l'Hérault. Solutions de confort sur
-              mesure depuis plus de 15 ans. Disponible 7 jours sur 7.
+              mesure. Disponible 7 jours sur 7.
             </p>
           </div>
 

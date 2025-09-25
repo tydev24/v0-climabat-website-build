@@ -40,8 +40,8 @@ export function GoogleReviewsSection() {
     },
     {
       icon: Award,
-      value: "15 ans",
-      label: "D'expérience",
+      value: "100%",
+      label: "Qualité garantie",
       delay: "delay-300",
     },
     {

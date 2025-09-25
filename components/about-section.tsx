@@ -57,8 +57,8 @@ export function AboutSection() {
               <p
                 className={`transition-all duration-700 delay-400 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
               >
-                Depuis plus de <strong className="text-foreground">15 ans</strong>, Climabat.34 s'impose comme votre
-                partenaire de confiance pour tous vos besoins en chauffage, climatisation et ventilation dans l'Hérault.
+                Climabat.34 s'impose comme votre partenaire de confiance pour tous vos besoins en chauffage,
+                climatisation et ventilation dans l'Hérault.
               </p>
               <p
                 className={`transition-all duration-700 delay-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
@@ -137,7 +137,7 @@ export function AboutSection() {
             {
               icon: Award,
               title: "Expertise",
-              description: "15+ ans d'expérience et formation continue aux dernières technologies",
+              description: "Formation continue aux dernières technologies et savoir-faire reconnu",
               delay: "delay-700",
             },
           ].map((item, index) => (
@@ -162,9 +162,9 @@ export function AboutSection() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8 text-center">
             {[
               { value: "500+", label: "Clients satisfaits", delay: "delay-100" },
-              { value: "15+", label: "Années d'expérience", delay: "delay-200" },
+              { value: "100%", label: "Hérault couvert", delay: "delay-200" },
               { value: "7j/7", label: "Disponibilité", delay: "delay-300" },
-              { value: "100%", label: "Hérault couvert", delay: "delay-400" },
+              { value: "24h/24", label: "Urgences", delay: "delay-400" },
             ].map((stat, index) => (
               <div
                 key={index}

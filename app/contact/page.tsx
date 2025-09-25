@@ -17,20 +17,61 @@ import { Phone, Mail, MapPin, Clock, Send } from "lucide-react"
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { toast } = useToast()
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    city: "",
+    service: "",
+    message: "",
+  })
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
 
-    toast({
-      title: "Message envoyé !",
-      description: "Nous vous recontacterons dans les plus brefs délais.",
-    })
+      const result = await response.json()
+
+      if (result.success) {
+        toast({
+          title: "Message envoyé !",
+          description: "Nous vous recontacterons dans les plus brefs délais.",
+        })
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          phone: "",
+          city: "",
+          service: "",
+          message: "",
+        })
+      } else {
+        throw new Error(result.message)
+      }
+    } catch (error) {
+      toast({
+        title: "Erreur",
+        description: "Une erreur est survenue lors de l'envoi de votre message.",
+        variant: "destructive",
+      })
+    }
 
     setIsSubmitting(false)
+  }
+
+  const updateFormData = (field: string, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }))
   }
 
   return (
@@ -134,32 +175,59 @@ export default function ContactPage() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <Label htmlFor="firstName">Prénom *</Label>
-                        <Input id="firstName" required />
+                        <Input
+                          id="firstName"
+                          value={formData.firstName}
+                          onChange={(e) => updateFormData("firstName", e.target.value)}
+                          required
+                        />
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="lastName">Nom *</Label>
-                        <Input id="lastName" required />
+                        <Input
+                          id="lastName"
+                          value={formData.lastName}
+                          onChange={(e) => updateFormData("lastName", e.target.value)}
+                          required
+                        />
                       </div>
                     </div>
 
                     <div className="space-y-2">
                       <Label htmlFor="email">Email *</Label>
-                      <Input id="email" type="email" required />
+                      <Input
+                        id="email"
+                        type="email"
+                        value={formData.email}
+                        onChange={(e) => updateFormData("email", e.target.value)}
+                        required
+                      />
                     </div>
 
                     <div className="space-y-2">
                       <Label htmlFor="phone">Téléphone *</Label>
-                      <Input id="phone" type="tel" required />
+                      <Input
+                        id="phone"
+                        type="tel"
+                        value={formData.phone}
+                        onChange={(e) => updateFormData("phone", e.target.value)}
+                        required
+                      />
                     </div>
 
                     <div className="space-y-2">
                       <Label htmlFor="city">Ville</Label>
-                      <Input id="city" placeholder="Ex: Montpellier" />
+                      <Input
+                        id="city"
+                        placeholder="Ex: Montpellier"
+                        value={formData.city}
+                        onChange={(e) => updateFormData("city", e.target.value)}
+                      />
                     </div>
 
                     <div className="space-y-2">
                       <Label htmlFor="service">Type de service</Label>
-                      <Select>
+                      <Select value={formData.service} onValueChange={(value) => updateFormData("service", value)}>
                         <SelectTrigger>
                           <SelectValue placeholder="Sélectionnez un service" />
                         </SelectTrigger>
@@ -180,6 +248,8 @@ export default function ContactPage() {
                         id="message"
                         placeholder="Décrivez votre projet ou votre demande..."
                         className="min-h-[120px]"
+                        value={formData.message}
+                        onChange={(e) => updateFormData("message", e.target.value)}
                         required
                       />
                     </div>
