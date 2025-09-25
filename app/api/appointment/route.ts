@@ -1,17 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server"
 import nodemailer from "nodemailer"
 
-console.log("[v0] Initializing SMTP transporter for appointment form")
-const transporter = nodemailer.createTransporter({
-  host: "mail.climabat34.fr",
-  port: 465,
-  secure: true, // SSL
-  auth: {
-    user: "support@climabat34.fr",
-    pass: "vM8$GKHN2Xy2Sjd",
-  },
-})
-
 export async function POST(request: NextRequest) {
   try {
     console.log("[v0] Appointment form API called")
@@ -46,6 +35,17 @@ export async function POST(request: NextRequest) {
       })
       return NextResponse.json({ success: false, message: "Champs requis manquants" }, { status: 400 })
     }
+
+    console.log("[v0] Creating SMTP transporter for appointment form")
+    const transporter = nodemailer.createTransporter({
+      host: "mail.climabat34.fr",
+      port: 465,
+      secure: true, // SSL
+      auth: {
+        user: "support@climabat34.fr",
+        pass: "Climabat34@",
+      },
+    })
 
     console.log("[v0] Preparing appointment email options")
     const mailOptions = {
