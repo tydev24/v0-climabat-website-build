@@ -44,7 +44,7 @@ ${description || "Aucune description fournie"}
 Email envoyé automatiquement depuis le formulaire de rendez-vous du site Climabat.34
     `.trim()
 
-    console.log("Email à envoyer à contact@climabat34.fr:")
+    console.log("Email à envoyer à mail_php@climabat34.fr:")
     console.log("Sujet: Nouvelle demande de rendez-vous")
     console.log("Contenu:", emailContent)
 
