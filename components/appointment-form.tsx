@@ -11,12 +11,13 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Calendar, Clock, User, MapPin, Wrench } from "lucide-react"
+import { Calendar, Clock, User, MapPin, Wrench, CheckCircle } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 
 export function AppointmentForm() {
   const { toast } = useToast()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSubmitted, setIsSubmitted] = useState(false)
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -61,10 +62,13 @@ export function AppointmentForm() {
 
       if (result.success) {
         toast({
-          title: "Rendez-vous demandé !",
-          description: "Nous vous contacterons dans les plus brefs délais pour confirmer votre rendez-vous.",
+          title: "✅ Rendez-vous demandé avec succès !",
+          description:
+            "Nous vous contacterons dans les plus brefs délais pour confirmer votre rendez-vous. Merci de votre confiance !",
+          duration: 6000,
         })
 
+        setIsSubmitted(true)
         setFormData({
           firstName: "",
           lastName: "",
@@ -80,13 +84,15 @@ export function AppointmentForm() {
           description: "",
           acceptTerms: false,
         })
+
+        setTimeout(() => setIsSubmitted(false), 5000)
       } else {
         throw new Error(result.message)
       }
     } catch (error) {
       toast({
-        title: "Erreur",
-        description: "Une erreur est survenue lors de l'envoi de votre demande.",
+        title: "❌ Erreur",
+        description: "Une erreur est survenue lors de l'envoi de votre demande. Veuillez réessayer.",
         variant: "destructive",
       })
     }
@@ -113,6 +119,21 @@ export function AppointmentForm() {
         <p className="text-muted-foreground">Remplissez ce formulaire et nous vous contacterons rapidement</p>
       </CardHeader>
       <CardContent>
+        {isSubmitted && (
+          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+            <div className="flex items-center gap-3">
+              <CheckCircle className="h-6 w-6 text-green-600" />
+              <div>
+                <h3 className="font-semibold text-green-800">Demande envoyée avec succès !</h3>
+                <p className="text-green-700 text-sm">
+                  Nous avons bien reçu votre demande de rendez-vous. Notre équipe vous contactera très prochainement
+                  pour confirmer votre intervention.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
         <form onSubmit={handleSubmit} className="space-y-8">
           {/* Personal Information */}
           <div className="space-y-4">

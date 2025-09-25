@@ -15,7 +15,8 @@ export default function Header() {
     { name: "À propos", href: "/a-propos" },
     { name: "Services", href: "/services" },
     { name: "Nos réalisations", href: "/realisations" },
-    { name: "Rendez-vous", href: "/rendez-vous" },
+    { name: "Contrat d'entretien", href: "/contrat-entretien" },
+    { name: "Garanties & SAV", href: "/garanties-sav" },
     { name: "Contact", href: "/contact" },
   ]
 
@@ -59,13 +60,13 @@ export default function Header() {
                 alt="Climabat.34"
                 width={200}
                 height={70}
-                className="h-16 sm:h-16 md:h-18 w-auto"
+                className="h-20 sm:h-20 md:h-22 w-auto"
               />
             </Link>
           </div>
 
           {/* Desktop navigation */}
-          <nav className="hidden lg:flex items-center space-x-8">
+          <nav className="hidden lg:flex items-center space-x-6">
             <Link href="/" className="text-foreground hover:text-primary transition-colors font-medium">
               Accueil
             </Link>
@@ -109,8 +110,15 @@ export default function Header() {
               Nos réalisations
             </Link>
 
-            <Link href="/rendez-vous" className="text-foreground hover:text-primary transition-colors font-medium">
-              Rendez-vous
+            <Link
+              href="/contrat-entretien"
+              className="text-foreground hover:text-primary transition-colors font-medium"
+            >
+              Contrat d'entretien
+            </Link>
+
+            <Link href="/garanties-sav" className="text-foreground hover:text-primary transition-colors font-medium">
+              Garanties & SAV
             </Link>
 
             <Link href="/contact" className="text-foreground hover:text-primary transition-colors font-medium">
@@ -177,11 +185,19 @@ export default function Header() {
               </Link>
 
               <Link
-                href="/rendez-vous"
+                href="/contrat-entretien"
                 className="block px-3 py-2 text-base font-medium text-foreground hover:text-primary hover:bg-muted rounded-md transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Rendez-vous
+                Contrat d'entretien
+              </Link>
+
+              <Link
+                href="/garanties-sav"
+                className="block px-3 py-2 text-base font-medium text-foreground hover:text-primary hover:bg-muted rounded-md transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Garanties & SAV
               </Link>
 
               <Link
@@ -191,6 +207,15 @@ export default function Header() {
               >
                 Contact
               </Link>
+
+              {/* Mobile button for appointments */}
+              <div className="px-3 py-2">
+                <Button asChild className="w-full">
+                  <Link href="/rendez-vous" onClick={() => setIsMenuOpen(false)}>
+                    Prendre RDV
+                  </Link>
+                </Button>
+              </div>
             </div>
           </div>
         )}

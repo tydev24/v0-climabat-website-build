@@ -83,6 +83,16 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/contrat-entretien" className="text-slate-300 hover:text-orange-400 transition-colors">
+                  Contrat d'entretien
+                </Link>
+              </li>
+              <li>
+                <Link href="/garanties-sav" className="text-slate-300 hover:text-orange-400 transition-colors">
+                  Garanties & SAV
+                </Link>
+              </li>
+              <li>
                 <Link
                   href="https://share.google/E9VrKOQ1vHISy1edA"
                   target="_blank"
@@ -102,10 +112,24 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-slate-700 mt-8 pt-8 text-center">
-          <p className="text-slate-400 text-sm">
-            © 2025 Climabat.34. Tous droits réservés. | Chauffage, Climatisation & Ventilation dans l'Hérault
-          </p>
+        <div className="border-t border-slate-700 mt-8 pt-8">
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-4">
+            <Link href="/mentions-legales" className="text-slate-400 hover:text-orange-400 transition-colors text-sm">
+              Mentions légales
+            </Link>
+            <span className="hidden sm:inline text-slate-600">|</span>
+            <Link
+              href="/politique-confidentialite"
+              className="text-slate-400 hover:text-orange-400 transition-colors text-sm"
+            >
+              Politique de confidentialité
+            </Link>
+          </div>
+          <div className="text-center">
+            <p className="text-slate-400 text-sm">
+              © 2025 Climabat.34. Tous droits réservés. | Chauffage, Climatisation & Ventilation dans l'Hérault
+            </p>
+          </div>
         </div>
       </div>
     </footer>
