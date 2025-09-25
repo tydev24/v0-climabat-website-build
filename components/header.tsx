@@ -29,61 +29,58 @@ export default function Header() {
 
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
-      {/* Top contact bar */}
       <div className="bg-accent text-accent-foreground">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-1 text-sm">
-            <div className="flex items-center gap-4 sm:gap-6">
-              <div className="flex items-center gap-2">
-                <Phone className="h-4 w-4" />
-                {/* Corrected phone number back to 07 48 29 54 92 */}
+          <div className="flex justify-between items-center py-0.5 text-xs">
+            <div className="flex items-center gap-3 sm:gap-4">
+              <div className="flex items-center gap-1.5">
+                <Phone className="h-3 w-3" />
                 <span className="hidden sm:inline">07 48 29 54 92</span>
                 <span className="sm:hidden">07 48 29 54 92</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Mail className="h-4 w-4" />
+              <div className="flex items-center gap-1.5">
+                <Mail className="h-3 w-3" />
                 <span className="hidden md:inline">contact@climabat34.fr</span>
                 <span className="md:hidden">Contact</span>
               </div>
             </div>
-            <div className="hidden sm:block text-sm">Intervention dans tout l'Hérault</div>
+            <div className="hidden sm:block text-xs">Intervention dans tout l'Hérault</div>
           </div>
         </div>
       </div>
 
-      {/* Main navigation */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-2">
+        <div className="flex justify-between items-center py-1">
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
               <Image
                 src="/images/logo.png"
                 alt="Climabat.34"
-                width={200}
-                height={70}
-                className="h-20 sm:h-20 md:h-22 w-auto"
+                width={240}
+                height={85}
+                className="h-18 sm:h-20 md:h-22 lg:h-24 w-auto"
               />
             </Link>
           </div>
 
           {/* Desktop navigation */}
-          <nav className="hidden lg:flex items-center space-x-6">
-            <Link href="/" className="text-foreground hover:text-primary transition-colors font-medium">
+          <nav className="hidden lg:flex items-center space-x-4">
+            <Link href="/" className="text-foreground hover:text-primary transition-colors font-medium text-sm">
               Accueil
             </Link>
 
-            <Link href="/a-propos" className="text-foreground hover:text-primary transition-colors font-medium">
+            <Link href="/a-propos" className="text-foreground hover:text-primary transition-colors font-medium text-sm">
               À propos
             </Link>
 
             <div className="relative">
               <button
-                className="flex items-center gap-1 text-foreground hover:text-primary transition-colors font-medium"
+                className="flex items-center gap-1 text-foreground hover:text-primary transition-colors font-medium text-sm"
                 onMouseEnter={() => setIsServicesOpen(true)}
                 onMouseLeave={() => setIsServicesOpen(false)}
               >
                 Services
-                <ChevronDown className="h-4 w-4" />
+                <ChevronDown className="h-3 w-3" />
               </button>
 
               {isServicesOpen && (
@@ -107,28 +104,34 @@ export default function Header() {
               )}
             </div>
 
-            <Link href="/realisations" className="text-foreground hover:text-primary transition-colors font-medium">
+            <Link
+              href="/realisations"
+              className="text-foreground hover:text-primary transition-colors font-medium text-sm"
+            >
               Nos réalisations
             </Link>
 
             <Link
               href="/contrat-entretien"
-              className="text-foreground hover:text-primary transition-colors font-medium"
+              className="text-foreground hover:text-primary transition-colors font-medium text-sm"
             >
               Contrat d'entretien
             </Link>
 
-            <Link href="/garanties-sav" className="text-foreground hover:text-primary transition-colors font-medium">
+            <Link
+              href="/garanties-sav"
+              className="text-foreground hover:text-primary transition-colors font-medium text-sm"
+            >
               Garanties & SAV
             </Link>
 
-            <Link href="/contact" className="text-foreground hover:text-primary transition-colors font-medium">
+            <Link href="/contact" className="text-foreground hover:text-primary transition-colors font-medium text-sm">
               Contact
             </Link>
           </nav>
 
           <div className="hidden lg:flex items-center">
-            <Button asChild>
+            <Button asChild size="sm">
               <Link href="/rendez-vous">Prendre RDV</Link>
             </Button>
           </div>
@@ -136,7 +139,7 @@ export default function Header() {
           {/* Mobile menu button */}
           <div className="lg:hidden">
             <Button variant="ghost" size="sm" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
           </div>
         </div>
@@ -211,7 +214,7 @@ export default function Header() {
 
               {/* Mobile button for appointments */}
               <div className="px-3 py-2">
-                <Button asChild className="w-full">
+                <Button asChild className="w-full" size="sm">
                   <Link href="/rendez-vous" onClick={() => setIsMenuOpen(false)}>
                     Prendre RDV
                   </Link>
