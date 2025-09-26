@@ -12,6 +12,61 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast"
 import { Phone, Mail, MapPin, Clock, Send, CheckCircle } from "lucide-react"
 
+interface ContactFormData {
+  firstName: string
+  lastName: string
+  email: string
+  phone: string
+  city?: string
+  service?: string
+  message: string
+}
+
+async function sendContactForm(data: ContactFormData) {
+  try {
+    console.log("[v0] Envoi du formulaire de contact:", data)
+
+    const response = await fetch("/api/send-contact", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+
+    const result = await response.json()
+
+    if (response.ok && result.success) {
+      console.log("[v0] Email envoyé avec succès via Nodemailer")
+      return {
+        success: true,
+        message: result.message,
+      }
+    } else {
+      throw new Error(result.message || "Erreur lors de l'envoi")
+    }
+  } catch (error) {
+    console.log("[v0] Erreur lors de l'envoi:", error)
+
+    const subject = encodeURIComponent(`Contact - ${data.service || "Général"}`)
+    const body = encodeURIComponent(
+      `Nom: ${data.firstName} ${data.lastName}\n` +
+        `Email: ${data.email}\n` +
+        `Téléphone: ${data.phone}\n` +
+        `Ville: ${data.city || "Non spécifiée"}\n` +
+        `Service: ${data.service || "Non spécifié"}\n\n` +
+        `Message:\n${data.message}`,
+    )
+
+    window.location.href = `mailto:contact@climabat34.fr?subject=${subject}&body=${body}`
+
+    return {
+      success: true,
+      message: "Votre client email s'est ouvert avec le message pré-rempli. Cliquez sur 'Envoyer' pour nous contacter.",
+    }
+  }
+}
+
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
@@ -31,20 +86,18 @@ export default function ContactPage() {
     setIsSubmitting(true)
 
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      })
+      console.log("[v0] Envoi du formulaire avec les données:", formData)
 
-      const result = await response.json()
+      const result = await sendContactForm(formData)
+
+      console.log("[v0] Résultat de l'envoi:", result)
 
       if (result.success) {
         toast({
           title: "✅ Message envoyé avec succès !",
-          description: "Nous avons bien reçu votre demande. Notre équipe vous recontactera dans les plus brefs délais.",
+          description:
+            result.message ||
+            "Nous avons bien reçu votre demande. Notre équipe vous recontactera dans les plus brefs délais.",
           duration: 6000,
         })
 
@@ -64,6 +117,7 @@ export default function ContactPage() {
         throw new Error(result.message)
       }
     } catch (error) {
+      console.error("[v0] Erreur lors de l'envoi:", error)
       toast({
         title: "❌ Erreur",
         description: "Une erreur est survenue lors de l'envoi de votre message. Veuillez réessayer.",

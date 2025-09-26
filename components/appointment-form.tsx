@@ -13,6 +13,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Calendar, Clock, User, MapPin, Wrench, CheckCircle } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
+// import { sendAppointmentForm } from "@/lib/form-service"
 
 export function AppointmentForm() {
   const { toast } = useToast()
@@ -50,7 +51,7 @@ export function AppointmentForm() {
     setIsSubmitting(true)
 
     try {
-      const response = await fetch("/api/appointment", {
+      const response = await fetch("/api/send-appointment", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -60,11 +61,10 @@ export function AppointmentForm() {
 
       const result = await response.json()
 
-      if (result.success) {
+      if (response.ok && result.success) {
         toast({
           title: "✅ Rendez-vous demandé avec succès !",
-          description:
-            "Nous vous contacterons dans les plus brefs délais pour confirmer votre rendez-vous. Merci de votre confiance !",
+          description: result.message,
           duration: 6000,
         })
 
@@ -87,13 +87,33 @@ export function AppointmentForm() {
 
         setTimeout(() => setIsSubmitted(false), 5000)
       } else {
-        throw new Error(result.message)
+        throw new Error(result.message || "Erreur lors de l'envoi")
       }
     } catch (error) {
+      console.error("[v0] Erreur lors de l'envoi:", error)
+
+      const subject = encodeURIComponent(`Demande de rendez-vous - ${formData.serviceType || "Service général"}`)
+      const body = encodeURIComponent(
+        `Nom: ${formData.firstName} ${formData.lastName}\n` +
+          `Email: ${formData.email}\n` +
+          `Téléphone: ${formData.phone}\n` +
+          `Adresse: ${formData.address || "Non spécifiée"}\n` +
+          `Ville: ${formData.city || "Non spécifiée"}\n` +
+          `Code postal: ${formData.postalCode || "Non spécifié"}\n` +
+          `Type de service: ${formData.serviceType || "Non spécifié"}\n` +
+          `Urgence: ${formData.urgency || "Non spécifiée"}\n` +
+          `Date préférée: ${formData.preferredDate || "Non spécifiée"}\n` +
+          `Heure préférée: ${formData.preferredTime || "Non spécifiée"}\n\n` +
+          `Description:\n${formData.description || "Aucune description fournie"}`,
+      )
+
+      window.location.href = `mailto:contact@climabat34.fr?subject=${subject}&body=${body}`
+
       toast({
-        title: "❌ Erreur",
-        description: "Une erreur est survenue lors de l'envoi de votre demande. Veuillez réessayer.",
-        variant: "destructive",
+        title: "✅ Client email ouvert",
+        description:
+          "Votre client email s'est ouvert avec la demande pré-remplie. Cliquez sur 'Envoyer' pour nous contacter.",
+        duration: 6000,
       })
     }
 

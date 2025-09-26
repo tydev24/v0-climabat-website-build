@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Configuration EmailJS pour Climabat</title>
+    <meta charset="utf-8">
+</head>
+<body>
+    <h1>Configuration EmailJS (Optionnel)</h1>
+    <p>Pour améliorer l'envoi d'emails, vous pouvez configurer EmailJS :</p>
+    
+    <ol>
+        <li>Allez sur <a href="https://www.emailjs.com/" target="_blank">https://www.emailjs.com/</a></li>
+        <li>Créez un compte gratuit</li>
+        <li>Configurez un service email (Gmail, Outlook, etc.)</li>
+        <li>Créez des templates pour "contact" et "appointment"</li>
+        <li>Remplacez les clés dans lib/form-service.ts</li>
+        <li>Ajoutez ce script dans app/layout.tsx :</li>
+    </ol>
+    
+    <pre><code>
+&lt;script
+  type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
+&gt;&lt;/script&gt;
+&lt;script type="text/javascript"&gt;
+  (function() {
+    emailjs.init("YOUR_PUBLIC_KEY");
+  })();
+&lt;/script&gt;
+    </code></pre>
+    
+    <p><strong>Sans EmailJS :</strong> Les formulaires ouvriront automatiquement votre client email avec le message pré-rempli.</p>
+</body>
+</html>

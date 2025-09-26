@@ -1,0 +1,16 @@
+{
+  "name": "climabat-static-build",
+  "description": "Script de build pour hébergement statique Apache",
+  "scripts": {
+    "build-static": "next build",
+    "export-static": "next export",
+    "build-and-export": "npm run build-static && npm run export-static"
+  },
+  "instructions": {
+    "1": "Exécuter 'npm run build' pour générer le build statique",
+    "2": "Le dossier 'out' contiendra tous les fichiers à uploader sur Apache",
+    "3": "Uploader le contenu du dossier 'out' à la racine de votre hébergement",
+    "4": "Le fichier .htaccess gère les redirections et la configuration Apache",
+    "5": "Pour Formspree: créer un compte sur formspree.io et remplacer les endpoints dans lib/form-service.ts"
+  }
+}
