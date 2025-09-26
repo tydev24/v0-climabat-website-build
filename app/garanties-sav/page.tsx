@@ -28,8 +28,8 @@ export default function GarantiesSavPage() {
     {
       icon: <Award className="h-8 w-8 text-primary" />,
       title: "Garantie main d'œuvre",
-      duration: "1 an",
-      description: "Nos interventions sont garanties 1 an pour votre tranquillité",
+      duration: "seulement 1 an",
+      description: "Nos interventions sont garanties seulement 1 an pour votre tranquillité",
     },
   ]
 
