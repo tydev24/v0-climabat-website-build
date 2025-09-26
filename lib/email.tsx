@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer"
 
-const transporter = nodemailer.createTransporter({
+const transporter = nodemailer.createTransport({
   host: "mail.climabat34.fr", // Assuming this is the SMTP server
   port: 587,
   secure: false, // true for 465, false for other ports
