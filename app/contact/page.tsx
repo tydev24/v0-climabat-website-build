@@ -37,7 +37,9 @@ async function sendContactForm(data: ContactFormData) {
     const result = await response.json()
 
     if (response.ok && result.success) {
-      console.log("[v0] Email envoyé avec succès via Nodemailer")
+      console.log("[v0] Email envoyé avec succès vers:", result.destination)
+      console.log("[v0] Réponse API reçue:", result.message)
+
       return {
         success: true,
         message: result.message,

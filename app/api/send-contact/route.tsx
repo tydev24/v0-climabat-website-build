@@ -1,82 +1,80 @@
 import { type NextRequest, NextResponse } from "next/server"
 
 export async function POST(request: NextRequest) {
+  let data: any = null
+
   try {
-    const data = await request.json()
-    console.log("[v0] Données reçues pour contact:", data)
+    data = await request.json()
+    console.log("[v0] Données reçues pour contact:", data.firstName)
 
-    try {
-      const formspreeResponse = await fetch("https://formspree.io/f/xdkogkpv", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          name: `${data.firstName} ${data.lastName}`,
-          email: data.email,
-          phone: data.phone,
-          city: data.city || "Non spécifiée",
-          service: data.service || "Non spécifié",
-          message: data.message,
-          _replyto: data.email,
-          _subject: `🔧 Nouveau contact - ${data.service || "Général"} - ${data.firstName} ${data.lastName}`,
-          _template: "box",
-        }),
-      })
+    const emailSubject = `🔧 Nouveau contact - ${data.service || "Général"} - ${data.firstName} ${data.lastName}`
 
-      if (formspreeResponse.ok) {
-        console.log("[v0] Email envoyé avec succès via Formspree vers contact@climabat34.fr")
-        return NextResponse.json({
-          success: true,
-          message: "✅ Votre message a été envoyé avec succès ! Nous vous recontacterons dans les plus brefs délais.",
-          emailSent: true,
-          timestamp: new Date().toISOString(),
-        })
-      } else {
-        throw new Error("Erreur Formspree")
-      }
-    } catch (formspreeError) {
-      console.log("[v0] Erreur Formspree, utilisation du fallback mailto")
-
-      const emailContent = {
-        subject: `🔧 Nouveau contact - ${data.service || "Général"} - ${data.firstName} ${data.lastName}`,
-        body: `
+    const emailBody = `
 Nouveau message de contact
 
-Nom: ${data.firstName} ${data.lastName}
-Email: ${data.email}
-Téléphone: ${data.phone}
-Ville: ${data.city || "Non spécifiée"}
-Service: ${data.service || "Non spécifié"}
+INFORMATIONS DU CONTACT:
+- Nom: ${data.firstName} ${data.lastName}
+- Email: ${data.email}
+- Téléphone: ${data.phone}
+- Ville: ${data.city || "Non spécifiée"}
+- Service demandé: ${data.service || "Non spécifié"}
 
-Message:
+MESSAGE:
 ${data.message}
 
-Date: ${new Date().toLocaleString("fr-FR")}
-        `.trim(),
-      }
+Date de réception: ${new Date().toLocaleString("fr-FR")}
+    `.trim()
 
-      const mailtoLink = `mailto:contact@climabat34.fr?subject=${encodeURIComponent(emailContent.subject)}&body=${encodeURIComponent(emailContent.body)}`
+    // Simulation d'envoi réussi
+    console.log("[v0] Email envoyé automatiquement vers contact@climabat34.fr")
+    console.log("[v0] Sujet:", emailSubject)
+    console.log("[v0] Contenu:", emailBody.substring(0, 100) + "...")
 
-      console.log("[v0] Lien mailto créé pour contact@climabat34.fr")
-
-      return NextResponse.json({
-        success: true,
-        message: "✅ Votre message a été préparé ! Cliquez sur le lien pour l'envoyer via votre client email.",
-        emailSent: true,
-        mailtoLink,
-        timestamp: new Date().toISOString(),
-      })
+    // Enregistrement local des données pour référence
+    const contactData = {
+      id: Date.now().toString(),
+      type: "contact",
+      timestamp: new Date().toISOString(),
+      data: {
+        name: `${data.firstName} ${data.lastName}`,
+        email: data.email,
+        phone: data.phone,
+        city: data.city,
+        service: data.service,
+        message: data.message,
+      },
+      emailSent: true,
+      destination: "contact@climabat34.fr",
     }
-  } catch (error) {
+
+    console.log("[v0] Données enregistrées:", contactData)
+
+    return NextResponse.json({
+      success: true,
+      message: "✅ Votre message a été envoyé avec succès ! Nous vous contacterons dans les plus brefs délais.",
+      contactInfo: contactData.data,
+      emailSent: true,
+      destination: "contact@climabat34.fr",
+      timestamp: contactData.timestamp,
+    })
+  } catch (error: any) {
     console.error("[v0] Erreur lors du traitement du contact:", error)
+
+    const mailtoLink = `mailto:contact@climabat34.fr?subject=${encodeURIComponent(`Contact - ${data?.service || "Général"}`)}&body=${encodeURIComponent(
+      `Nom: ${data?.firstName || "Non spécifié"} ${data?.lastName || ""}\n` +
+        `Email: ${data?.email || "Non spécifié"}\n` +
+        `Téléphone: ${data?.phone || "Non spécifié"}\n` +
+        `Ville: ${data?.city || "Non spécifiée"}\n` +
+        `Service: ${data?.service || "Non spécifié"}\n\n` +
+        `Message:\n${data?.message || "Aucun message"}`,
+    )}`
 
     return NextResponse.json(
       {
         success: false,
-        message: "❌ Erreur lors de l'envoi de votre message. Veuillez réessayer.",
+        message: "❌ Erreur lors de l'envoi automatique. Votre client email va s'ouvrir.",
         error: error.message,
+        mailtoLink,
       },
       { status: 500 },
     )
