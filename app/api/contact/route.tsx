@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { sendContactEmail } from "@/lib/email"
 
 export async function POST(request: NextRequest) {
   try {
@@ -15,49 +16,28 @@ export async function POST(request: NextRequest) {
     }
 
     try {
-      console.log("[v0] Attempting to send email via EmailJS...")
+      console.log("[v0] Attempting to send email via nodemailer...")
 
-      const emailData = {
-        service_id: "service_gmail",
-        template_id: "template_contact",
-        user_id: "user_public_key",
-        template_params: {
-          to_email: "contact@climabat34.fr", // Changed from support@climabat34.fr
-          from_name: `${firstName} ${lastName}`,
-          from_email: email,
-          phone: phone,
-          city: city || "Non spécifiée",
-          service: service || "Non spécifié",
-          message: message,
-          subject: `Nouvelle demande de contact - ${service || "Général"}`,
-          reply_to: email,
-        },
-      }
-
-      const response = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(emailData),
+      await sendContactEmail({
+        firstName,
+        lastName,
+        email,
+        phone,
+        city,
+        service,
+        message,
       })
 
-      if (response.ok) {
-        console.log("[v0] Email sent successfully via EmailJS")
-        return NextResponse.json({
-          success: true,
-          message: "Email envoyé avec succès",
-        })
-      } else {
-        const errorData = await response.text()
-        console.log("[v0] EmailJS error:", response.status, errorData)
-        throw new Error(`EmailJS failed: ${response.status}`)
-      }
+      console.log("[v0] Email sent successfully via nodemailer")
+      return NextResponse.json({
+        success: true,
+        message: "Email envoyé avec succès",
+      })
     } catch (error) {
-      console.log("[v0] Primary email service error:", error)
+      console.log("[v0] Nodemailer error:", error)
 
       const emailContent = {
-        to: "contact@climabat34.fr", // Changed from support@climabat34.fr
+        to: "contact@climabat34.fr",
         from: email,
         subject: `Nouvelle demande de contact - ${service || "Général"}`,
         content: `

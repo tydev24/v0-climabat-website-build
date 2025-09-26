@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { sendAppointmentEmail } from "@/lib/email"
 
 export async function POST(request: NextRequest) {
   try {
@@ -29,54 +30,33 @@ export async function POST(request: NextRequest) {
     }
 
     try {
-      console.log("[v0] Attempting to send appointment email via EmailJS...")
+      console.log("[v0] Attempting to send appointment email via nodemailer...")
 
-      const emailData = {
-        service_id: "service_gmail",
-        template_id: "template_appointment",
-        user_id: "user_public_key",
-        template_params: {
-          to_email: "contact@climabat34.fr", // Changed from support@climabat34.fr
-          from_name: `${firstName} ${lastName}`,
-          from_email: email,
-          phone: phone,
-          address: address || "Non spécifiée",
-          city: city || "Non spécifiée",
-          postalCode: postalCode || "Non spécifié",
-          serviceType: serviceType || "Non spécifié",
-          urgency: urgency || "Normal",
-          preferredDate: preferredDate || "À définir",
-          preferredTime: preferredTime || "À définir",
-          description: description || "Aucune description fournie",
-          subject: `Nouvelle demande de rendez-vous - ${serviceType || "Service général"}`,
-          reply_to: email,
-        },
-      }
-
-      const response = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(emailData),
+      await sendAppointmentEmail({
+        firstName,
+        lastName,
+        email,
+        phone,
+        address,
+        city,
+        postalCode,
+        serviceType,
+        urgency,
+        preferredDate,
+        preferredTime,
+        description,
       })
 
-      if (response.ok) {
-        console.log("[v0] Appointment email sent successfully via EmailJS")
-        return NextResponse.json({
-          success: true,
-          message: "Demande de rendez-vous envoyée avec succès",
-        })
-      } else {
-        const errorData = await response.text()
-        console.log("[v0] EmailJS error:", response.status, errorData)
-        throw new Error(`EmailJS failed: ${response.status}`)
-      }
+      console.log("[v0] Appointment email sent successfully via nodemailer")
+      return NextResponse.json({
+        success: true,
+        message: "Demande de rendez-vous envoyée avec succès",
+      })
     } catch (error) {
-      console.log("[v0] Primary email service error:", error)
+      console.log("[v0] Nodemailer error:", error)
 
       const emailContent = {
-        to: "contact@climabat34.fr", // Changed from support@climabat34.fr
+        to: "contact@climabat34.fr",
         from: email,
         subject: `Nouvelle demande de rendez-vous - ${serviceType || "Service général"}`,
         content: `
