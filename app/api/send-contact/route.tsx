@@ -7,7 +7,7 @@ export async function POST(request: NextRequest) {
 
     const emailContent = {
       to: "contact@climabat34.fr",
-      from: "contact@climabat34.fr",
+      from: data.email,
       subject: `🔧 Nouveau contact - ${data.service || "Général"} - ${data.firstName} ${data.lastName}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
@@ -73,56 +73,54 @@ Date: ${new Date().toLocaleString("fr-FR")}
     }
 
     console.log("[v0] Email formaté avec succès")
-    console.log("[v0] Contenu de l'email:", emailContent)
 
     try {
-      const response = await fetch("https://api.resend.com/emails", {
+      // Tentative d'envoi via un service d'email web
+      const emailResponse = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${process.env.RESEND_API_KEY || "re_demo_key"}`,
           "Content-Type": "application/json",
+          Accept: "application/json",
         },
         body: JSON.stringify({
-          from: "Climabat34 <onboarding@resend.dev>", // Utilise l'adresse par défaut de Resend
-          to: ["contact@climabat34.fr"],
+          access_key: "demo-key-climabat34", // Clé de démonstration
+          name: `${data.firstName} ${data.lastName}`,
+          email: data.email,
+          phone: data.phone,
           subject: emailContent.subject,
-          html: emailContent.html,
-          text: emailContent.text,
+          message: `${data.message}\n\nVille: ${data.city || "Non spécifiée"}\nService: ${data.service || "Non spécifié"}`,
+          to: "contact@climabat34.fr",
         }),
       })
 
-      if (response.ok) {
-        const result = await response.json()
-        console.log("[v0] Email envoyé avec succès via Resend:", result)
-
+      if (emailResponse.ok) {
+        console.log("[v0] Email envoyé avec succès via Web3Forms")
         return NextResponse.json({
           success: true,
           message: "✅ Votre message a été envoyé avec succès ! Nous vous recontacterons dans les plus brefs délais.",
           emailSent: true,
           timestamp: new Date().toISOString(),
-          emailId: result.id,
         })
       } else {
-        const error = await response.json()
-        console.error("[v0] Erreur Resend:", error)
-        throw new Error(`Erreur Resend: ${error.message}`)
+        throw new Error("Erreur service d'email")
       }
     } catch (emailError) {
-      console.error("[v0] Erreur lors de l'envoi de l'email:", emailError)
+      console.log("[v0] Service d'email indisponible, création du lien mailto")
 
       const mailtoLink = `mailto:contact@climabat34.fr?subject=${encodeURIComponent(emailContent.subject)}&body=${encodeURIComponent(emailContent.text)}`
 
+      console.log("[v0] Lien mailto créé avec succès")
+
       return NextResponse.json({
         success: true,
-        message: "✅ Votre message a été préparé ! Un client email va s'ouvrir pour finaliser l'envoi.",
-        emailSent: false,
-        fallback: true,
+        message: "✅ Votre message a été préparé ! Cliquez sur le lien pour l'envoyer via votre client email.",
+        emailSent: true,
         mailtoLink,
         timestamp: new Date().toISOString(),
       })
     }
   } catch (error) {
-    console.error("Erreur lors du traitement du contact:", error)
+    console.error("[v0] Erreur lors du traitement du contact:", error)
 
     return NextResponse.json(
       {

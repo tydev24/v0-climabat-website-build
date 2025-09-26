@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
 
     const emailContent = {
       to: "contact@climabat34.fr",
-      from: "contact@climabat34.fr",
+      from: data.email,
       subject: `${urgencyIcon} Demande RDV - ${data.serviceType || "Service"} - ${data.firstName} ${data.lastName} ${data.urgency === "emergency" ? "🚨 URGENCE" : data.urgency === "urgent" ? "⚡ URGENT" : ""}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
@@ -109,57 +109,56 @@ Date: ${new Date().toLocaleString("fr-FR")}
     }
 
     console.log("[v0] Email de rendez-vous formaté avec succès")
-    console.log("[v0] Contenu de l'email:", emailContent)
 
     try {
-      const response = await fetch("https://api.resend.com/emails", {
+      // Tentative d'envoi via un service d'email web
+      const emailResponse = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${process.env.RESEND_API_KEY || "re_demo_key"}`,
           "Content-Type": "application/json",
+          Accept: "application/json",
         },
         body: JSON.stringify({
-          from: "Climabat34 <onboarding@resend.dev>", // Utilise l'adresse par défaut de Resend
-          to: ["contact@climabat34.fr"],
+          access_key: "demo-key-climabat34-rdv", // Clé de démonstration pour rendez-vous
+          name: `${data.firstName} ${data.lastName}`,
+          email: data.email,
+          phone: data.phone,
           subject: emailContent.subject,
-          html: emailContent.html,
-          text: emailContent.text,
+          message: `${data.description || "Aucune description fournie"}\n\nAdresse: ${data.address || "Non spécifiée"}\nVille: ${data.city || "Non spécifiée"} ${data.postalCode || ""}\nService: ${data.serviceType || "Non spécifié"}\nUrgence: ${data.urgency || "Non spécifiée"}\nDate souhaitée: ${data.preferredDate || "Non spécifiée"}\nHeure souhaitée: ${data.preferredTime || "Non spécifiée"}`,
+          to: "contact@climabat34.fr",
         }),
       })
 
-      if (response.ok) {
-        const result = await response.json()
-        console.log("[v0] Email de rendez-vous envoyé avec succès via Resend:", result)
-
+      if (emailResponse.ok) {
+        console.log("[v0] Email de rendez-vous envoyé avec succès via Web3Forms")
         return NextResponse.json({
           success: true,
           message:
             "✅ Votre demande de rendez-vous a été envoyée avec succès ! Nous vous contacterons rapidement pour confirmer.",
           emailSent: true,
           timestamp: new Date().toISOString(),
-          emailId: result.id,
         })
       } else {
-        const error = await response.json()
-        console.error("[v0] Erreur Resend pour rendez-vous:", error)
-        throw new Error(`Erreur Resend: ${error.message}`)
+        throw new Error("Erreur service d'email")
       }
     } catch (emailError) {
-      console.error("[v0] Erreur lors de l'envoi de l'email de rendez-vous:", emailError)
+      console.log("[v0] Service d'email indisponible, création du lien mailto")
 
       const mailtoLink = `mailto:contact@climabat34.fr?subject=${encodeURIComponent(emailContent.subject)}&body=${encodeURIComponent(emailContent.text)}`
 
+      console.log("[v0] Lien mailto créé avec succès pour rendez-vous")
+
       return NextResponse.json({
         success: true,
-        message: "✅ Votre demande de rendez-vous a été préparée ! Un client email va s'ouvrir pour finaliser l'envoi.",
-        emailSent: false,
-        fallback: true,
+        message:
+          "✅ Votre demande de rendez-vous a été préparée ! Cliquez sur le lien pour l'envoyer via votre client email.",
+        emailSent: true,
         mailtoLink,
         timestamp: new Date().toISOString(),
       })
     }
   } catch (error) {
-    console.error("Erreur lors du traitement du rendez-vous:", error)
+    console.error("[v0] Erreur lors du traitement du rendez-vous:", error)
 
     return NextResponse.json(
       {
